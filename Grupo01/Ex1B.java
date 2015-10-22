@@ -3,6 +3,32 @@ import java.util.*;
 
 public class Ex1B {
 
+	public static void add1Smoothing(String fname) {
+
+		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
+
+		try {
+
+			String[] fnameParts = fname.split(".out");
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Add1.out"));
+			FileInputStream fstream = new FileInputStream(fname);
+			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+			String strLine;
+
+			while ((strLine = br.readLine()) != null)   {
+				String[] lineParts = strLine.split("\t");
+				Integer count = Integer.parseInt(lineParts[1]);
+				count++;
+				writer.write(lineParts[0]+ "\t" + count);
+			}
+			writer.close();
+
+		} catch (Exception e) { //Catch exception if any
+			System.err.println("Error: " + e.getMessage());
+
+		}
+	}
+
 	public static void bigrams(String fname) {
 
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
@@ -154,6 +180,11 @@ public class Ex1B {
 				unigrams(fname1 + ".out");
 				bigrams(fname2 + ".out");
 				unigrams(fname2 + ".out");
+				add1Smoothing(fname1+"Unigramas.out");
+				add1Smoothing(fname1+"Bigramas.out");
+				add1Smoothing(fname2+"Unigramas.out");
+				add1Smoothing(fname2+"Bigramas.out");
+
 
 			} catch (Exception e) { //Catch exception if any
 				System.err.println("Error: " + e.getMessage());
