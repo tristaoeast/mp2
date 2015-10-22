@@ -3,8 +3,6 @@ import java.util.*;
 
 public class OutSpliterNGramGenerator {
 
-
-
 	public static void bigrams(String fname) {
 
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
@@ -17,10 +15,12 @@ public class OutSpliterNGramGenerator {
 			String strLine;
 
 			while ((strLine = br.readLine()) != null)   {
-				strLine = strLine.replaceAll("[\\,\\;\\:\\/\\\\<\\>\\'\\«\\»\\%\\!\\?\"]|--|\\s\\.", "");
-				strLine = strLine.replaceAll("\\S\\)|\\(\\S","\\S");
-				strLine = strLine.replaceAll("\\s\\)|\\(\\s","");
-				// System.out.println("");
+				strLine = strLine.replaceAll("[\\,\\;\\:\\/\\\\<\\>\\'\\«\\»\\%\\!\\?\"\\(\\)]|\\-\\-|\\s\\.|\\.\\.|\\.\\.\\.", "");
+				strLine = strLine.replaceAll("(\\S)\\)", "$1");
+				strLine = strLine.replaceAll("\\((\\S)", "$1");
+				strLine = strLine.replaceAll("([a-z])\\.", "$1");
+				strLine = strLine.replaceAll("\\s\\)|\\(\\s", "");
+
 				StringTokenizer st = new StringTokenizer(strLine);
 				String currentWord = st.nextToken().toLowerCase();
 				String currentBigram;
@@ -52,6 +52,60 @@ public class OutSpliterNGramGenerator {
 			//Sort the list of bigrams
 			Collections.sort(keys);
 
+			for (String key : keys) {
+				// System.out.println(key + "\t" + myTable.get(key));
+				writer.write(key + "\t" + myTable.get(key) + "\n");
+			}
+			writer.close();
+		} catch (Exception e) { //Catch exception if any
+			System.err.println("Error: " + e.getMessage());
+		}
+	}
+
+	public static void unigrams(String fname) {
+
+		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
+
+		try {
+			String[] fnameParts = fname.split(".out");
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Unigramas.out"));
+			FileInputStream fstream = new FileInputStream(fname);
+			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+			String strLine;
+
+			while ((strLine = br.readLine()) != null)   {
+				// Remove all non alphanumerical characters
+				strLine = strLine.replaceAll("[\\,\\;\\:\\/\\\\<\\>\\'\\«\\»\\%\\!\\?\"\\(\\)]|\\-\\-|\\s\\.|\\.\\.|\\.\\.\\.", "");
+				strLine = strLine.replaceAll("(\\S)\\)", "$1");
+				strLine = strLine.replaceAll("\\((\\S)", "$1");
+				strLine = strLine.replaceAll("([a-z])\\.", "$1");
+				strLine = strLine.replaceAll("\\s\\)|\\(\\s", "");
+
+				StringTokenizer st = new StringTokenizer(strLine);
+				String currentUnigram;
+				while (st.hasMoreTokens()) {
+
+					currentUnigram = st.nextToken().toLowerCase();
+
+					//If unigram has been seen, add 1 to value
+					if (myTable.containsKey(currentUnigram)) {
+						Integer prevValue = myTable.get(currentUnigram);
+						myTable.put(currentUnigram, prevValue + 1);
+					}
+					//else create new unigram entry in table
+					else {
+						myTable.put(currentUnigram, new Integer(1));
+					}
+
+				}
+
+			}
+
+			//Grab all of the unigrams and put them in a list
+			ArrayList<String> keys = new ArrayList<String>(myTable.keySet());
+			//Sort the list of unigrams
+			Collections.sort(keys);
+			writer.write(myTable.size() + "\n");
 			for (String key : keys) {
 				// System.out.println(key + "\t" + myTable.get(key));
 				writer.write(key + "\t" + myTable.get(key) + "\n");
@@ -97,7 +151,9 @@ public class OutSpliterNGramGenerator {
 				writer2.close();
 
 				bigrams(fname1 + ".out");
+				unigrams(fname1 + ".out");
 				bigrams(fname2 + ".out");
+				unigrams(fname2 + ".out");
 
 			} catch (Exception e) { //Catch exception if any
 				System.err.println("Error: " + e.getMessage());
