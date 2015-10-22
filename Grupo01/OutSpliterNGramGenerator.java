@@ -22,7 +22,7 @@ public class OutSpliterNGramGenerator {
 			String strLine;
 
 			while ((strLine = br.readLine()) != null)   {
-				strLine = strLine.replaceAll("[.,;:/\\<>'«»]|--", "");
+				strLine = strLine.replaceAll("[,;:/\\<>'«»%!?\"]|--", "");
 				// System.out.println("");
 				StringTokenizer st = new StringTokenizer(strLine);
 				String currentWord = st.nextToken().toLowerCase();
@@ -32,7 +32,7 @@ public class OutSpliterNGramGenerator {
 					String nextWord = st.nextToken().toLowerCase();
 					currentBigram = currentWord + " " + nextWord;
 
-					System.out.println("CURRENT BIGRAM: " + currentBigram);
+					// System.out.println("CURRENT BIGRAM: " + currentBigram);
 					// System.out.println("CURRENT WORD: " + currentWord);
 					// System.out.println("CURRENT BIGRAM: " + currentWord);
 
@@ -127,6 +127,7 @@ public class OutSpliterNGramGenerator {
 				writer2.close();
 
 				bigrams(fname1 + ".out");
+				bigrams(fname2 + ".out");
 
 			} catch (Exception e) { //Catch exception if any
 				System.err.println("Error: " + e.getMessage());
