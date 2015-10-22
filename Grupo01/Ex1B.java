@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class OutSpliterNGramGenerator {
+public class Ex1B {
 
 	public static void bigrams(String fname) {
 
