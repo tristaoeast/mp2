@@ -15,20 +15,26 @@ public class OutSpliterNGramGenerator {
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
 
 		try {
+			String[] fnameParts = fname.split(".out");
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Bigramas.out"));
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 			String strLine;
+
 			while ((strLine = br.readLine()) != null)   {
 				strLine = strLine.replaceAll("[.,;:/\\<>'«»]|--", "");
+				// System.out.println("");
 				StringTokenizer st = new StringTokenizer(strLine);
 				String currentWord = st.nextToken().toLowerCase();
 				String currentBigram;
 				while (st.hasMoreTokens()) {
 
-					currentBigram = currentWord + " " + st.nextToken().toLowerCase();
+					String nextWord = st.nextToken().toLowerCase();
+					currentBigram = currentWord + " " + nextWord;
 
-					System.out.println("CURRENT WORD: " + currentWord);
-					System.out.println("CURRENT BIGRAM: " + currentWord);
+					System.out.println("CURRENT BIGRAM: " + currentBigram);
+					// System.out.println("CURRENT WORD: " + currentWord);
+					// System.out.println("CURRENT BIGRAM: " + currentWord);
 
 					//If bigram has been seen, add 1 to value
 					if (myTable.containsKey(currentBigram)) {
@@ -39,14 +45,21 @@ public class OutSpliterNGramGenerator {
 					else {
 						myTable.put(currentBigram, new Integer(1));
 					}
+					currentWord = nextWord;
 				}
 
 			}
 
+			//Grab all of the bigram and put them in a list
+			ArrayList<String> keys = new ArrayList<String>(myTable.keySet());
+			//Sort the list of bigrams
+			Collections.sort(keys);
 
-			for (String key : myTable.keySet()) {
-				System.out.println(key + "\t" + myTable.get(key));
+			for (String key : keys) {
+				// System.out.println(key + "\t" + myTable.get(key));
+				writer.write(key + "\t" + myTable.get(key) + "\n");
 			}
+			writer.close();
 		} catch (Exception e) { //Catch exception if any
 			System.err.println("Error: " + e.getMessage());
 		}
