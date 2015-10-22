@@ -8,24 +8,46 @@ public class Ex1B {
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
 
 		try {
+			int c = 0;
+			System.out.println("FNAME: " + fname);
 
 			String[] fnameParts = fname.split(".out");
+			// System.out.println(++c);
 			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Add1.out"));
+			BufferedWriter writerdbg = new BufferedWriter(new FileWriter ("DBG.out"));
+			writerdbg.write("FNAME: " + fname);
+			// System.out.println(++c);
 			FileInputStream fstream = new FileInputStream(fname);
+			// System.out.println(++c);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+			// System.out.println(++c);
 			String strLine;
+			// System.out.println(++c);
 
-			while ((strLine = br.readLine()) != null)   {
-				String[] lineParts = strLine.split("\t");
-				Integer count = Integer.parseInt(lineParts[1]);
-				count++;
-				writer.write(lineParts[0]+ "\t" + count);
+			strLine = br.readLine();
+			String[] lineParts = strLine.split("\t");
+			while (lineParts.length < 2) {
+				writer.write(lineParts[0] + "\n");
+				strLine = br.readLine();
+				lineParts = strLine.split("\t");
+			}
+			int count = Integer.parseInt(lineParts[1]);
+			writer.write(lineParts[0] + "\t" + ++count + "\n");
+
+			while ((strLine = br.readLine()) != null) {
+				lineParts = strLine.split("\t");
+				count = Integer.parseInt(lineParts[1]);
+				// count++;
+				writer.write(lineParts[0] + "\t" + ++count + "\n")	;
 			}
 			writer.close();
 
-		} catch (Exception e) { //Catch exception if any
-			System.err.println("Error: " + e.getMessage());
-
+		} catch (NumberFormatException e) {
+			System.err.println("NFE: " + e.getMessage());
+		} catch (FileNotFoundException e) {
+			System.err.println("FNFE: " + e.getMessage());
+		} catch (IOException e) {
+			System.err.println("IOE: " + e.getMessage());
 		}
 	}
 
@@ -180,14 +202,15 @@ public class Ex1B {
 				unigrams(fname1 + ".out");
 				bigrams(fname2 + ".out");
 				unigrams(fname2 + ".out");
-				add1Smoothing(fname1+"Unigramas.out");
-				add1Smoothing(fname1+"Bigramas.out");
-				add1Smoothing(fname2+"Unigramas.out");
-				add1Smoothing(fname2+"Bigramas.out");
+
+				add1Smoothing(fname1 + "Unigramas.out");
+				add1Smoothing(fname1 + "Bigramas.out");
+				add1Smoothing(fname2 + "Unigramas.out");
+				add1Smoothing(fname2 + "Bigramas.out");
 
 
-			} catch (Exception e) { //Catch exception if any
-				System.err.println("Error: " + e.getMessage());
+			} catch (IOException e) { //Catch exception if any
+				System.err.println("ErrorMain: " + e.getMessage());
 			}
 		}
 	}
