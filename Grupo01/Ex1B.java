@@ -8,21 +8,12 @@ public class Ex1B {
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
 
 		try {
-			int c = 0;
-			System.out.println("FNAME: " + fname);
 
-			String[] fnameParts = fname.split(".out");
-			// System.out.println(++c);
-			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Add1.out"));
-			BufferedWriter writerdbg = new BufferedWriter(new FileWriter ("DBG.out"));
-			writerdbg.write("FNAME: " + fname);
-			// System.out.println(++c);
+			String[] fnameParts = fname.split(".txt");
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Add1.txt"));
 			FileInputStream fstream = new FileInputStream(fname);
-			// System.out.println(++c);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-			// System.out.println(++c);
 			String strLine;
-			// System.out.println(++c);
 
 			strLine = br.readLine();
 			String[] lineParts = strLine.split("\t");
@@ -56,8 +47,8 @@ public class Ex1B {
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
 
 		try {
-			String[] fnameParts = fname.split(".out");
-			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Bigramas.out"));
+			String[] fnameParts = fname.split(".txt");
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Bigramas.txt"));
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 			String strLine;
@@ -115,8 +106,8 @@ public class Ex1B {
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
 
 		try {
-			String[] fnameParts = fname.split(".out");
-			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Unigramas.out"));
+			String[] fnameParts = fname.split(".txt");
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Unigramas.txt"));
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 			String strLine;
@@ -176,8 +167,8 @@ public class Ex1B {
 				String[] fname2parts = filename[2].split("-");
 				String fname2 = fname2parts[0].toLowerCase();
 
-				BufferedWriter writer1 = new BufferedWriter(new FileWriter (fname1 + ".out"));
-				BufferedWriter writer2 = new BufferedWriter(new FileWriter (fname2 + ".out"));
+				BufferedWriter writer1 = new BufferedWriter(new FileWriter (fname1 + ".txt"));
+				BufferedWriter writer2 = new BufferedWriter(new FileWriter (fname2 + ".txt"));
 
 				FileInputStream fstream = new FileInputStream(args[0]);
 				BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -198,15 +189,15 @@ public class Ex1B {
 				writer1.close();
 				writer2.close();
 
-				bigrams(fname1 + ".out");
-				unigrams(fname1 + ".out");
-				bigrams(fname2 + ".out");
-				unigrams(fname2 + ".out");
+				bigrams(fname1 + ".txt");
+				unigrams(fname1 + ".txt");
+				bigrams(fname2 + ".txt");
+				unigrams(fname2 + ".txt");
 
-				add1Smoothing(fname1 + "Unigramas.out");
-				add1Smoothing(fname1 + "Bigramas.out");
-				add1Smoothing(fname2 + "Unigramas.out");
-				add1Smoothing(fname2 + "Bigramas.out");
+				add1Smoothing(fname1 + "Unigramas.txt");
+				add1Smoothing(fname1 + "Bigramas.txt");
+				add1Smoothing(fname2 + "Unigramas.txt");
+				add1Smoothing(fname2 + "Bigramas.txt");
 
 
 			} catch (IOException e) { //Catch exception if any
