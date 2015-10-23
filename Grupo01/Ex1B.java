@@ -54,11 +54,11 @@ public class Ex1B {
 			String strLine;
 
 			while ((strLine = br.readLine()) != null)   {
-				strLine = strLine.replaceAll("[\\,\\;\\:\\/\\\\<\\>\\'\\«\\»\\%\\!\\?\"\\(\\)]|\\-\\-|\\s\\.|\\.\\.|\\.\\.\\.", "");
-				strLine = strLine.replaceAll("(\\S)\\)", "$1");
-				strLine = strLine.replaceAll("\\((\\S)", "$1");
-				strLine = strLine.replaceAll("([a-z])\\.", "$1");
-				strLine = strLine.replaceAll("\\s\\)|\\(\\s", "");
+				// strLine = strLine.replaceAll("[\\,\\;\\:\\/\\\\<\\>\\'\\«\\»\\%\\!\\?\"\\(\\)]|\\-\\-|\\s\\.|\\.\\.|\\.\\.\\.", "");
+				// strLine = strLine.replaceAll("(\\S)\\)", "$1");
+				// strLine = strLine.replaceAll("\\((\\S)", "$1");
+				// strLine = strLine.replaceAll("([a-z])\\.", "$1");
+				// strLine = strLine.replaceAll("\\s\\)|\\(\\s", "");
 
 				StringTokenizer st = new StringTokenizer(strLine);
 				String currentWord = st.nextToken().toLowerCase();
@@ -110,11 +110,11 @@ public class Ex1B {
 
 			while ((strLine = br.readLine()) != null)   {
 				// Remove all non alphanumerical characters
-				strLine = strLine.replaceAll("[\\,\\;\\:\\/\\\\<\\>\\'\\«\\»\\%\\!\\?\"\\(\\)]|\\-\\-|\\s\\.|\\.\\.|\\.\\.\\.", "");
-				strLine = strLine.replaceAll("(\\S)\\)", "$1");
-				strLine = strLine.replaceAll("\\((\\S)", "$1");
-				strLine = strLine.replaceAll("([a-z])\\.", "$1");
-				strLine = strLine.replaceAll("\\s\\)|\\(\\s", "");
+				// strLine = strLine.replaceAll("[\\,\\;\\:\\/\\\\<\\>\\'\\«\\»\\%\\!\\?\"\\(\\)]|\\-\\-|\\s\\.|\\.\\.|\\.\\.\\.", "");
+				// strLine = strLine.replaceAll("(\\S)\\)", "$1");
+				// strLine = strLine.replaceAll("\\((\\S)", "$1");
+				// strLine = strLine.replaceAll("([a-z])\\.", "$1");
+				// strLine = strLine.replaceAll("\\s\\)|\\(\\s", "");
 
 				StringTokenizer st = new StringTokenizer(strLine);
 				String currentUnigram;

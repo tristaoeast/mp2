@@ -1,7 +1,17 @@
-390
-10-04-1998	1
+399
+'	1
+',	1
+'alterando	1
+'ou	1
+'reestruturando	1
+'reformulando	1
+(10-04-1998)	1
+,	57
+--	1
+.	21
 15	1
 53	1
+:	1
 a	26
 acabou	1
 acerca	1
@@ -17,7 +27,6 @@ alcácer	1
 aldeia	1
 algumas	1
 alguns	1
-alterando	1
 alto	1
 além	2
 anos	3
@@ -93,7 +102,7 @@ debate	1
 defender-se	1
 deficiência	1
 deitava	1
-democrático	1
+democrático.	1
 descobrir	1
 desenvolvimento	1
 desferiu	1
@@ -249,7 +258,7 @@ operação	1
 opressor	1
 organização	1
 os	7
-ou	3
+ou	2
 outras	1
 outro	1
 ouve	1
@@ -314,8 +323,6 @@ rechaçou	1
 recorrer	1
 recusou	1
 reduzir-se	1
-reestruturando	1
-reformulando	1
 regime	1
 renato	1
 reportagem	1
@@ -385,6 +392,8 @@ viveu	1
 vocal	1
 votação	1
 zona	1
+«	3
+»	3
 à	6
 às	1
 água	2
