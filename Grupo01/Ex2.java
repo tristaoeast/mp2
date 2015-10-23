@@ -13,22 +13,73 @@ public class Ex2 {
 	private static String lemma2;
 	private static String param;
 
+	public static double getProbabilityBigramAdd1(String word1, String word2, int lemma) {
+
+		if (word1 == null || word2 == null)
+			return 1;
+
+		String bigram = word1 + " " + word2;
+		String unigram = word1;
+		double bigramCountAdd1 = 1;
+		double word1CountAdd1 = lemma1UnigramsTotal + lemma2UnigramsTotal;
+		if (1 == lemma) {
+
+			if (lemma1BigramTable.containsKey(bigram))
+				bigramCountAdd1 = ((double) lemma1BigramTable.get(bigram) + 1.0);
+			if (lemma1UnigramTable.containsKey(word1))
+				word1CountAdd1 = ((double) lemma1UnigramTable.get(word1) + lemma1UnigramsTotal + lemma2UnigramsTotal);
+
+
+		} else if (2 == lemma) {
+
+			if (lemma2BigramTable.containsKey(bigram))
+				bigramCountAdd1 = ((double) lemma2BigramTable.get(bigram) + 1.0);
+			if (lemma2UnigramTable.containsKey(word1))
+				word1CountAdd1 = ((double) lemma2UnigramTable.get(word1) + lemma1UnigramsTotal + lemma2UnigramsTotal);
+
+		}
+		System.out.println(bigram + "-" + lemma);
+		System.out.println(bigramCountAdd1 + "/" + word1CountAdd1);
+		return ((double) bigramCountAdd1 / word1CountAdd1);
+	}
+
+	public static void lemmatizeLine(String previousWord, String currentWord, String nextWord, BufferedWriter writer, String line) {
+
+		double probLemma1 = getProbabilityBigramAdd1(previousWord, currentWord, 1)
+		                    * getProbabilityBigramAdd1(currentWord, nextWord, 1);
+		double probLemma2 = getProbabilityBigramAdd1(previousWord, currentWord, 2)
+		                    * getProbabilityBigramAdd1(currentWord, nextWord, 2);
+
+		System.out.println("pWORD: " + previousWord + " cWORD: " + currentWord + " nWORD: " + nextWord);
+		System.out.println(lemma1 + ": " + probLemma1 + " ||| " + lemma2 + ": " + probLemma2);
+
+		try {
+			if (probLemma1 > probLemma2)
+				writer.write(lemma1 + "\t" + line + "\n");
+			else if (probLemma1 < probLemma2)
+				writer.write(lemma2 + "\t" + line + "\n");
+			else if (probLemma1 == probLemma2)
+				writer.write(lemma1 + "," + lemma2 + "\t" + line + "\n");
+			else
+				writer.write("?" + "\t" + line + "\n");
+		} catch (IOException ioe) {
+			System.err.println(ioe.getMessage());
+		}
+	}
+
 
 	public static void lemmatizeFile(String fname) {
 		try {
 
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+			String[] fnameParts = fname.split(".txt");
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Lemmatized.out"));
 
-
-			// nextWord = "Troll";
-			// if (prevWord == null)
-			// 	System.out.println("PREVWORD!");
-			// if (nextWord != null)
-			// 	System.out.println("NEXTWORD: " + nextWord);
 
 			String strLine;
 			while ((strLine = br.readLine()) != null) {
+
 				boolean paramFound = false;
 				StringTokenizer st = new StringTokenizer(strLine);
 				String previousWord = null;
@@ -36,24 +87,31 @@ public class Ex2 {
 				String currentWord = st.nextToken().toLowerCase();
 				while (st.hasMoreTokens() && !paramFound) {
 					nextWord = st.nextToken().toLowerCase();
-					if(currentWord.equals(param)){
+					if (currentWord.equals(param)) {
 						paramFound = true;
+						lemmatizeLine(previousWord, currentWord, nextWord, writer, strLine);
+						break;
 					}
 					previousWord = currentWord;
 					currentWord = nextWord;
-
+					nextWord = null;
 				}
-				if(currentWord.equals(param) && !paramFound){
-					
+
+				// Situation where the desired param is the last token in sentence
+				if (currentWord.equals(param) && !paramFound) {
+					lemmatizeLine(previousWord, currentWord, nextWord, writer, strLine);
 				}
 
 			}
+			writer.close();
 
 		} catch (FileNotFoundException fnfe) {
 			System.err.println(fnfe.getMessage());
 		} catch (IOException ioe) {
 			System.err.println(ioe.getMessage());
 		}
+
+
 	}
 
 	private static void loadParamLemmas(String fname) {
@@ -135,12 +193,13 @@ public class Ex2 {
 	public static void main(String[] args) {
 
 		if (args.length != 6) {
-			System.err.println("ERROR: Ussage as follows - java Ex2 lemma1UnigramasAdd1.txt lemma1BigramasAdd1.txt lemma2UnigramasAdd1.txt lemma2BigramasAdd1.txt params.txt frases.txt");
+			System.err.println("ERROR: Usage as follows - java Ex2 lema1Unigramas.txt lema1Bigramas.txt lema2Unigramas.txt lema2Bigramas.txt params.txt frases.txt");
 			System.exit(-1);
 		}
 
 		loadTables(args);
 		loadParamLemmas(args[4]);
+		System.out.println(lemma1 + ": " + lemma1UnigramsTotal + " ||| " + lemma2 + ": " + lemma2UnigramsTotal);
 		lemmatizeFile(args[5]);
 
 	}
