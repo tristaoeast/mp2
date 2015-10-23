@@ -68,10 +68,6 @@ public class Ex1B {
 					String nextWord = st.nextToken().toLowerCase();
 					currentBigram = currentWord + " " + nextWord;
 
-					// System.out.println("CURRENT BIGRAM: " + currentBigram);
-					// System.out.println("CURRENT WORD: " + currentWord);
-
-
 					//If bigram has been seen, add 1 to value
 					if (myTable.containsKey(currentBigram)) {
 						Integer prevValue = myTable.get(currentBigram);
