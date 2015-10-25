@@ -25,17 +25,17 @@ public class Ex2 {
 		if (1 == lemma) {
 
 			if (lemma1BigramTable.containsKey(bigram))
-				bigramCountAdd1 = ((double) lemma1BigramTable.get(bigram) + 1.0);
+				bigramCountAdd1 = ((double) lemma1BigramTable.get(bigram));
 			if (lemma1UnigramTable.containsKey(word1))
-				word1CountAdd1 = ((double) lemma1UnigramTable.get(word1) + lemma1UnigramsTotal + lemma2UnigramsTotal);
+				word1CountAdd1 = ((double) lemma1UnigramTable.get(word1) + lemma1UnigramsTotal + lemma2UnigramsTotal - 1);
 
 
 		} else if (2 == lemma) {
 
 			if (lemma2BigramTable.containsKey(bigram))
-				bigramCountAdd1 = ((double) lemma2BigramTable.get(bigram) + 1.0);
+				bigramCountAdd1 = ((double) lemma2BigramTable.get(bigram));
 			if (lemma2UnigramTable.containsKey(word1))
-				word1CountAdd1 = ((double) lemma2UnigramTable.get(word1) + lemma1UnigramsTotal + lemma2UnigramsTotal);
+				word1CountAdd1 = ((double) lemma2UnigramTable.get(word1) + lemma1UnigramsTotal + lemma2UnigramsTotal - 1);
 
 		}
 		// System.out.println(bigram + "-" + lemma);
@@ -74,7 +74,7 @@ public class Ex2 {
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 			String[] fnameParts = fname.split("\\.");
-			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Lemmatized.out"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Resultado.out"));
 
 
 			String strLine;
@@ -144,11 +144,15 @@ public class Ex2 {
 
 			String[] fnameParts = args[0].split("[A-Z]");
 			lemma1 = fnameParts[0];
-			// System.out.println("LEMMA1: " + lemma1);
+			
+			String[] fnamePartsC = args[0].split("\\.");
+			// system.out.println(fnamePartsC[0] + "Contagem.txt");
+			FileInputStream fstreamC = new FileInputStream(fnamePartsC[0] + "Contagem.txt");
+			BufferedReader brc = new BufferedReader(new InputStreamReader(fstreamC));
+			lemma1UnigramsTotal = Integer.parseInt(brc.readLine());
 
 			FileInputStream fstream = new FileInputStream(args[0]);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-			lemma1UnigramsTotal = Integer.parseInt(br.readLine());
 			String strLine;
 			while ((strLine = br.readLine()) != null) {
 				String[] lineParts = strLine.split("\t");
@@ -162,13 +166,18 @@ public class Ex2 {
 				lemma1BigramTable.put(lineParts[0], Integer.parseInt(lineParts[1]));
 			}
 
+
 			fnameParts = args[2].split("[A-Z]");
 			lemma2 = fnameParts[0];
-			// System.out.println("LEMMA2: " + lemma2);
+
+			fnamePartsC = args[2].split("\\.");
+			// system.out.println(fnamePartsC[0] + "Contagem.txt");
+			fstreamC = new FileInputStream(fnamePartsC[0] + "Contagem.txt");
+			brc = new BufferedReader(new InputStreamReader(fstreamC));
+			lemma2UnigramsTotal = Integer.parseInt(brc.readLine());
 
 			fstream = new FileInputStream(args[2]);
 			br = new BufferedReader(new InputStreamReader(fstream));
-			lemma2UnigramsTotal = Integer.parseInt(br.readLine());
 			while ((strLine = br.readLine()) != null) {
 				String[] lineParts = strLine.split("\t");
 				lemma2UnigramTable.put(lineParts[0], Integer.parseInt(lineParts[1]));

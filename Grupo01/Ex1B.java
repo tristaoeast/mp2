@@ -9,25 +9,24 @@ public class Ex1B {
 
 		try {
 
-			String[] fnameParts = fname.split(".txt");
-			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Add1.txt"));
+			String[] fnameParts = fname.split("SemAlisamento");
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + ".txt"));
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 			String strLine;
 
-			strLine = br.readLine();
-			String[] lineParts = strLine.split("\t");
-			while (lineParts.length < 2) {
-				writer.write(lineParts[0] + "\n");
-				strLine = br.readLine();
-				lineParts = strLine.split("\t");
-			}
-			int count = Integer.parseInt(lineParts[1]);
-			writer.write(lineParts[0] + "\t" + ++count + "\n");
-
+			// strLine = br.readLine();
+			// String[] lineParts = strLine.split("\t");
+			// while (lineParts.length < 2) {
+			// 	writer.write(lineParts[0] + "\n");
+			// 	strLine = br.readLine();
+			// 	lineParts = strLine.split("\t");
+			// }
+			// int count = Integer.parseInt(lineParts[1]);
+			// writer.write(lineParts[0] + "\t" + ++count + "\n");
 			while ((strLine = br.readLine()) != null) {
-				lineParts = strLine.split("\t");
-				count = Integer.parseInt(lineParts[1]);
+				String[] lineParts = strLine.split("\t");
+				int count = Integer.parseInt(lineParts[1]);
 				// count++;
 				writer.write(lineParts[0] + "\t" + ++count + "\n")	;
 			}
@@ -47,8 +46,8 @@ public class Ex1B {
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
 
 		try {
-			String[] fnameParts = fname.split(".txt");
-			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Bigramas.txt"));
+			String[] fnameParts = fname.split("Anotado.txt");
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "BigramasSemAlisamento.txt"));
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 			String strLine;
@@ -102,13 +101,14 @@ public class Ex1B {
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
 
 		try {
-			String[] fnameParts = fname.split(".txt");
-			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Unigramas.txt"));
+			String[] fnameParts = fname.split("Anotado.txt");
+			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "UnigramasSemAlisamento.txt"));
+			BufferedWriter writerc = new BufferedWriter(new FileWriter (fnameParts[0] + "UnigramasContagem.txt"));
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 			String strLine;
 
-			while ((strLine = br.readLine()) != null)   {
+			while ((strLine = br.readLine()) != null) {
 				// Remove all non alphanumerical characters
 				// strLine = strLine.replaceAll("[\\,\\;\\:\\/\\\\<\\>\\'\\«\\»\\%\\!\\?\"\\(\\)]|\\-\\-|\\s\\.|\\.\\.|\\.\\.\\.", "");
 				// strLine = strLine.replaceAll("(\\S)\\)", "$1");
@@ -131,7 +131,6 @@ public class Ex1B {
 					else {
 						myTable.put(currentUnigram, new Integer(1));
 					}
-
 				}
 
 			}
@@ -140,12 +139,14 @@ public class Ex1B {
 			ArrayList<String> keys = new ArrayList<String>(myTable.keySet());
 			//Sort the list of unigrams
 			Collections.sort(keys);
-			writer.write(myTable.size() + "\n");
+			// system.out.println("myTable.size: " + myTable.size());
+			writerc.write(Integer.toString(myTable.size()));
 			for (String key : keys) {
 				// System.out.println(key + "\t" + myTable.get(key));
 				writer.write(key + "\t" + myTable.get(key) + "\n");
 			}
 			writer.close();
+			writerc.close();
 		} catch (Exception e) { //Catch exception if any
 			System.err.println("Error: " + e.getMessage());
 		}
@@ -161,13 +162,13 @@ public class Ex1B {
 				String[] filename = args[0].split("(?=[A-Z])");
 				String fname1 = filename[1].toLowerCase();
 				String[] fname2parts = filename[2].split("-");
-				// System.out.println("FNAME2PARTS[0]: " + fname2parts[0]);
+				// system.out.println("FNAME2PARTS[0]: " + fname2parts[0]);
 				String[] fname2parts1 = fname2parts[0].split("\\.");
-				// System.out.println("FNAME2PARTS1[0]: " + fname2parts1[0]);
+				// system.out.println("FNAME2PARTS1[0]: " + fname2parts1[0]);
 				String fname2 = fname2parts1[0].toLowerCase();
 
-				BufferedWriter writer1 = new BufferedWriter(new FileWriter (fname1 + ".txt"));
-				BufferedWriter writer2 = new BufferedWriter(new FileWriter (fname2 + ".txt"));
+				BufferedWriter writer1 = new BufferedWriter(new FileWriter (fname1 + "Anotado.txt"));
+				BufferedWriter writer2 = new BufferedWriter(new FileWriter (fname2 + "Anotado.txt"));
 
 				FileInputStream fstream = new FileInputStream(args[0]);
 				BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -179,8 +180,11 @@ public class Ex1B {
 					// System.out.println("LEMA: " + parts[0] + "\n");
 
 					if (parts[0].equals(fname1)) {
+						// System.out.println("FNAME 1");
+
 						writer1.write(parts[1] + "\n");
 					} else if (parts[0].equals(fname2)) {
+						// System.out.println("FNAME 2");
 						writer2.write(parts[1] + "\n");
 					}
 
@@ -188,15 +192,15 @@ public class Ex1B {
 				writer1.close();
 				writer2.close();
 
-				bigrams(fname1 + ".txt");
-				unigrams(fname1 + ".txt");
-				bigrams(fname2 + ".txt");
-				unigrams(fname2 + ".txt");
+				bigrams(fname1 + "Anotado.txt");
+				unigrams(fname1 + "Anotado.txt");
+				bigrams(fname2 + "Anotado.txt");
+				unigrams(fname2 + "Anotado.txt");
 
-				add1Smoothing(fname1 + "Unigramas.txt");
-				add1Smoothing(fname1 + "Bigramas.txt");
-				add1Smoothing(fname2 + "Unigramas.txt");
-				add1Smoothing(fname2 + "Bigramas.txt");
+				add1Smoothing(fname1 + "UnigramasSemAlisamento.txt");
+				add1Smoothing(fname1 + "BigramasSemAlisamento.txt");
+				add1Smoothing(fname2 + "UnigramasSemAlisamento.txt");
+				add1Smoothing(fname2 + "BigramasSemAlisamento.txt");
 
 
 			} catch (IOException e) { //Catch exception if any
