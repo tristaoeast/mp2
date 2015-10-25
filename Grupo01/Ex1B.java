@@ -46,7 +46,7 @@ public class Ex1B {
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
 
 		try {
-			String[] fnameParts = fname.split("Anotado.txt");
+			String[] fnameParts = fname.split("Anotado.out");
 			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "BigramasSemAlisamento.txt"));
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -101,7 +101,7 @@ public class Ex1B {
 		Hashtable<String, Integer> myTable = new Hashtable<String, Integer>();
 
 		try {
-			String[] fnameParts = fname.split("Anotado.txt");
+			String[] fnameParts = fname.split("Anotado.out");
 			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "UnigramasSemAlisamento.txt"));
 			BufferedWriter writerc = new BufferedWriter(new FileWriter (fnameParts[0] + "UnigramasContagem.txt"));
 			FileInputStream fstream = new FileInputStream(fname);
@@ -167,8 +167,8 @@ public class Ex1B {
 				// system.out.println("FNAME2PARTS1[0]: " + fname2parts1[0]);
 				String fname2 = fname2parts1[0].toLowerCase();
 
-				BufferedWriter writer1 = new BufferedWriter(new FileWriter (fname1 + "Anotado.txt"));
-				BufferedWriter writer2 = new BufferedWriter(new FileWriter (fname2 + "Anotado.txt"));
+				BufferedWriter writer1 = new BufferedWriter(new FileWriter (fname1 + "Anotado.out"));
+				BufferedWriter writer2 = new BufferedWriter(new FileWriter (fname2 + "Anotado.out"));
 
 				FileInputStream fstream = new FileInputStream(args[0]);
 				BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -192,10 +192,10 @@ public class Ex1B {
 				writer1.close();
 				writer2.close();
 
-				bigrams(fname1 + "Anotado.txt");
-				unigrams(fname1 + "Anotado.txt");
-				bigrams(fname2 + "Anotado.txt");
-				unigrams(fname2 + "Anotado.txt");
+				bigrams(fname1 + "Anotado.out");
+				unigrams(fname1 + "Anotado.out");
+				bigrams(fname2 + "Anotado.out");
+				unigrams(fname2 + "Anotado.out");
 
 				add1Smoothing(fname1 + "UnigramasSemAlisamento.txt");
 				add1Smoothing(fname1 + "BigramasSemAlisamento.txt");
