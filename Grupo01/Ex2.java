@@ -38,8 +38,8 @@ public class Ex2 {
 				word1CountAdd1 = ((double) lemma2UnigramTable.get(word1) + lemma1UnigramsTotal + lemma2UnigramsTotal);
 
 		}
-		System.out.println(bigram + "-" + lemma);
-		System.out.println(bigramCountAdd1 + "/" + word1CountAdd1);
+		// System.out.println(bigram + "-" + lemma);
+		// System.out.println(bigramCountAdd1 + "/" + word1CountAdd1);
 		return ((double) bigramCountAdd1 / word1CountAdd1);
 	}
 
@@ -50,8 +50,8 @@ public class Ex2 {
 		double probLemma2 = getProbabilityBigramAdd1(previousWord, currentWord, 2)
 		                    * getProbabilityBigramAdd1(currentWord, nextWord, 2);
 
-		System.out.println("pWORD: " + previousWord + " cWORD: " + currentWord + " nWORD: " + nextWord);
-		System.out.println(lemma1 + ": " + probLemma1 + " ||| " + lemma2 + ": " + probLemma2);
+		// System.out.println("pWORD: " + previousWord + " cWORD: " + currentWord + " nWORD: " + nextWord);
+		// System.out.println(lemma1 + ": " + probLemma1 + " ||| " + lemma2 + ": " + probLemma2);
 
 		try {
 			if (probLemma1 > probLemma2)
@@ -73,7 +73,7 @@ public class Ex2 {
 
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-			String[] fnameParts = fname.split(".txt");
+			String[] fnameParts = fname.split("\\.");
 			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Lemmatized.out"));
 
 
@@ -128,8 +128,7 @@ public class Ex2 {
 			        || (lemma1.equals(lemmasParts[1]) && lemma2.equals(lemmasParts[0])))) {
 				System.err.println("ERROR: Wrong parametrization file or wrong NGrams files");
 				System.exit(-1);
-			} else
-				System.out.println("PARAM: " + param);
+			}
 
 		} catch (FileNotFoundException fnfe) {
 			System.err.println(fnfe.getMessage());
@@ -145,7 +144,7 @@ public class Ex2 {
 
 			String[] fnameParts = args[0].split("[A-Z]");
 			lemma1 = fnameParts[0];
-			System.out.println("LEMMA1: " + lemma1);
+			// System.out.println("LEMMA1: " + lemma1);
 
 			FileInputStream fstream = new FileInputStream(args[0]);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -165,7 +164,7 @@ public class Ex2 {
 
 			fnameParts = args[2].split("[A-Z]");
 			lemma2 = fnameParts[0];
-			System.out.println("LEMMA2: " + lemma2);
+			// System.out.println("LEMMA2: " + lemma2);
 
 			fstream = new FileInputStream(args[2]);
 			br = new BufferedReader(new InputStreamReader(fstream));
@@ -199,7 +198,7 @@ public class Ex2 {
 
 		loadTables(args);
 		loadParamLemmas(args[4]);
-		System.out.println(lemma1 + ": " + lemma1UnigramsTotal + " ||| " + lemma2 + ": " + lemma2UnigramsTotal);
+		// System.out.println(lemma1 + ": " + lemma1UnigramsTotal + " ||| " + lemma2 + ": " + lemma2UnigramsTotal);
 		lemmatizeFile(args[5]);
 
 	}

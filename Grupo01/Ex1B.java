@@ -161,7 +161,10 @@ public class Ex1B {
 				String[] filename = args[0].split("(?=[A-Z])");
 				String fname1 = filename[1].toLowerCase();
 				String[] fname2parts = filename[2].split("-");
-				String fname2 = fname2parts[0].toLowerCase();
+				// System.out.println("FNAME2PARTS[0]: " + fname2parts[0]);
+				String[] fname2parts1 = fname2parts[0].split("\\.");
+				// System.out.println("FNAME2PARTS1[0]: " + fname2parts1[0]);
+				String fname2 = fname2parts1[0].toLowerCase();
 
 				BufferedWriter writer1 = new BufferedWriter(new FileWriter (fname1 + ".txt"));
 				BufferedWriter writer2 = new BufferedWriter(new FileWriter (fname2 + ".txt"));
