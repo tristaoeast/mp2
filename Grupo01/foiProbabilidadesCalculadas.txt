@@ -1,0 +1,9 @@
+Tokens sequence: russo foi apanhado
+ir: 4.461226985533758E-8 > ser: 4.060015968042802E-8
+
+Tokens sequence: madeira foi o
+ir: 4.462171760414218E-8 < ser: 1.3395216527586434E-6
+
+Tokens sequence: já foi extinto
+ir: 4.461226985533758E-8 < ser: 3.2356811503170055E-7
+

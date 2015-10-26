@@ -43,7 +43,14 @@ public class Ex2 {
 		return ((double) bigramCountAdd1 / word1CountAdd1);
 	}
 
-	public static void lemmatizeLine(String previousWord, String currentWord, String nextWord, BufferedWriter writer, String line) {
+	public static String getString(String word) {
+		if (word == null)
+			return "";
+		return word;
+	}
+
+	public static void lemmatizeLine(String previousWord, String currentWord,
+	                                 String nextWord, BufferedWriter writer, String line, BufferedWriter writerP) {
 
 		double probLemma1 = getProbabilityBigramAdd1(previousWord, currentWord, 1)
 		                    * getProbabilityBigramAdd1(currentWord, nextWord, 1);
@@ -53,15 +60,29 @@ public class Ex2 {
 		// System.out.println("pWORD: " + previousWord + " cWORD: " + currentWord + " nWORD: " + nextWord);
 		// System.out.println(lemma1 + ": " + probLemma1 + " ||| " + lemma2 + ": " + probLemma2);
 
+
 		try {
-			if (probLemma1 > probLemma2)
+
+			writerP.write("Tokens sequence: " + getString(previousWord) + " " + getString(currentWord)
+			              + " " + getString(nextWord) + "\n");
+
+			if (probLemma1 > probLemma2) {
 				writer.write(lemma1 + "\t" + line + "\n");
-			else if (probLemma1 < probLemma2)
+				writerP.write(lemma1 + ": " + Double.toString(probLemma1) + " > " + lemma2
+				              + ": " + Double.toString(probLemma2) + "\n\n");
+			} else if (probLemma1 < probLemma2) {
 				writer.write(lemma2 + "\t" + line + "\n");
-			else if (probLemma1 == probLemma2)
+				writerP.write(lemma1 + ": " + Double.toString(probLemma1) + " < " + lemma2
+				              + ": " + Double.toString(probLemma2) + "\n\n");
+			} else if (probLemma1 == probLemma2) {
 				writer.write(lemma1 + "," + lemma2 + "\t" + line + "\n");
-			else
+				writerP.write(lemma1 + ": " + Double.toString(probLemma1) + " == " + lemma2
+				              + ": " + Double.toString(probLemma2) + "\n\n");
+			} else {
 				writer.write("?" + "\t" + line + "\n");
+				writerP.write(lemma1 + ": " + Double.toString(probLemma1) + " ?? " + lemma2
+				              + ": " + Double.toString(probLemma2) + "\n\n");
+			}
 		} catch (IOException ioe) {
 			System.err.println(ioe.getMessage());
 		}
@@ -73,8 +94,10 @@ public class Ex2 {
 
 			FileInputStream fstream = new FileInputStream(fname);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-			String[] fnameParts = fname.split("\\.");
+			String[] fnameParts = fname.split("[A-Z]");
 			BufferedWriter writer = new BufferedWriter(new FileWriter (fnameParts[0] + "Resultado.out"));
+			BufferedWriter writerP = new BufferedWriter( new FileWriter(fnameParts[0] + "ProbabilidadesCalculadas.txt"));
+
 
 
 			String strLine;
@@ -89,7 +112,7 @@ public class Ex2 {
 					nextWord = st.nextToken().toLowerCase();
 					if (currentWord.equals(param)) {
 						paramFound = true;
-						lemmatizeLine(previousWord, currentWord, nextWord, writer, strLine);
+						lemmatizeLine(previousWord, currentWord, nextWord, writer, strLine, writerP);
 						break;
 					}
 					previousWord = currentWord;
@@ -99,11 +122,12 @@ public class Ex2 {
 
 				// Situation where the desired param is the last token in sentence
 				if (currentWord.equals(param) && !paramFound) {
-					lemmatizeLine(previousWord, currentWord, nextWord, writer, strLine);
+					lemmatizeLine(previousWord, currentWord, nextWord, writer, strLine, writerP);
 				}
 
 			}
 			writer.close();
+			writerP.close();
 
 		} catch (FileNotFoundException fnfe) {
 			System.err.println(fnfe.getMessage());
@@ -144,7 +168,7 @@ public class Ex2 {
 
 			String[] fnameParts = args[0].split("[A-Z]");
 			lemma1 = fnameParts[0];
-			
+
 			String[] fnamePartsC = args[0].split("\\.");
 			// system.out.println(fnamePartsC[0] + "Contagem.txt");
 			FileInputStream fstreamC = new FileInputStream(fnamePartsC[0] + "Contagem.txt");

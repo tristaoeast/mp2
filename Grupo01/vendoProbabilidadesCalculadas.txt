@@ -1,0 +1,9 @@
+Tokens sequence: só vendo dirá
+ver: 5.526420191549869E-7 > vender: 2.2465263086951802E-7
+
+Tokens sequence:  vendo como
+ver: 0.0017898693395382137 > vender: 1.928268414963363E-4
+
+Tokens sequence: foram vendo cada
+ver: 2.0816468379975353E-7 > vender: 3.748577789586631E-8
+

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rm -rf *gramas* *Resultado* *Anotado*
+rm -rf *gramas* *Resultado* *Anotado* *probabilidades*
