@@ -7,3 +7,6 @@ ver: 0.0017898693395382137 > vender: 1.928268414963363E-4
 Sequencia de palavras: foram vendo cada
 ver: 2.0816468379975353E-7 > vender: 3.748577789586631E-8
 
+Sequencia de palavras:  vendo polpa
+ver: 1.7898693395382138E-4 < vender: 1.928268414963363E-4
+
