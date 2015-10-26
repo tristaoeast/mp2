@@ -63,7 +63,7 @@ public class Ex2 {
 
 		try {
 
-			writerP.write("Tokens sequence: " + getString(previousWord) + " " + getString(currentWord)
+			writerP.write("Sequencia de palavras: " + getString(previousWord) + " " + getString(currentWord)
 			              + " " + getString(nextWord) + "\n");
 
 			if (probLemma1 > probLemma2) {
